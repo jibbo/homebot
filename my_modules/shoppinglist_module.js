@@ -4,7 +4,7 @@ const Module = require('../structure/module');
 
 // only these users can use this module
 const whitelist = [84840252, 96703266];
-// TODO make usage of a db
+// TODO make usage of a db, look into why sequelize doesn't compile on this machine.
 var groceryList = {};
 
 module.exports = class ShoppingList extends Module{
