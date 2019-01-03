@@ -6,7 +6,15 @@
     "start": "nodemon bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jibbo",
+  "author": {
+      "name": "jibbo",
+      "email" : "posta.giovanni.defrancesco+homebotbugs@gmail.com"
+  },
+  "home": "https://github.com/jibbo/homebot",
+  "bugs": { 
+      "url" : "https://github.com/jibbo/homebot/issues", 
+      "email" : "posta.giovanni.defrancesco+homebot@gmail.com"
+  },
   "license": "GPL-3.0-only",
   "dependencies": {
     "node-schedule": "^1.3.1",
