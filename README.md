@@ -4,6 +4,10 @@ An extensible telegram bot built for 🏡 with ❤️
 
 // TODO.
 
+### Next features
+
+- Automatic `my_module` folder scanning to load scripts
+
 ### License
 
 ```
