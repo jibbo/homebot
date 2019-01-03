@@ -1,0 +1,22 @@
+{
+  "name": "Casa_Defra_Tac_Bot",
+  "version": "0.0.0",
+  "description": "This is the bot of the home of both Gio and Sara",
+  "scripts": {
+    "start": "nodemon bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jibbo",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "node-schedule": "^1.3.1",
+    "node-telegram-bot-api": "^0.30.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "nodemonConfig": {
+      "ignore": ["test/*", "docs/*"],
+      "delay": "2500"
+  }
+}
