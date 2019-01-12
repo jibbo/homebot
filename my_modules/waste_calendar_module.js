@@ -8,6 +8,8 @@ const invernalCalendar = ['Un cazzo ❌', 'Carta 🗞', 'Umido ☣', 'Secco ♻'
 const summerCalendar = ['Umido 🐷','Carta 🗞', 'Umido ☣', 'Secco ♻', 'Umido ☣',
 	'Plastica e Lattine', 'Un cazzo ❌'];
 
+const reminderRecipients = ["84840252", "96703266"];
+
 module.exports = class WasteCalendar extends Module {
 
 	constructor(homeBot){
@@ -19,18 +21,26 @@ module.exports = class WasteCalendar extends Module {
 
 	    schedule.scheduleJob(rule, () => {
 		const what = this._getWhatToThrowAway();
-		this.bot.sendMessage('Ohu, buttate via ' + what + 'oggi, va!');
+		for( var recipient in reminderRecipients){
+		    this.bot.sendMessage(
+			recipient, 
+			'Ohu, buttate via ' + what + 'oggi, va!'
+		    );
+		}
 	    });
 	}
 
 	registerListeners(){
 		this.bot.onText(/\/spazzatura/, (msg, match) => {
-			this._computeAnswer(msg.from.id);
+		    this._computeAnswer(msg.from.id);
+		});
+		this.bot.on(/\/ricordami/, (msg, match) => {
+
 		});
 		this.bot.on('text', (msg) =>{
-			if(msg.text.includes('buttare')){
-				this._computeAnswer(msg.from.id);
-			}
+		    if(msg.text.includes('buttare')){
+			    this._computeAnswer(msg.from.id);
+		    }
 		});
 	}
 
