@@ -1,13 +1,13 @@
-# Homebot - the telegram bot for homes 
+# Homebot - the telegram bot for houses 
 
-An extensible telegram bot built for 🏡 with ❤️
+An extensible telegram bot built for the 🏡 with ❤️
 
 // TODO.
 
 ### Next features
 In no particular order:
 
-- Localization
+- NLP
 - Admin Module to add or remove users from using some modules
 - Automatic `my_module` folder scanning to load scripts
 
