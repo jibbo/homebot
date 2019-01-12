@@ -2,33 +2,33 @@
 
 const TelegramBot = require('node-telegram-bot-api');
 
-const affirmative = ['Sì!','Ok 👌','Va bene!'];
-const done = ['Fatto! 🕴','Finito! 👌'];
-const doSomething = [ 'Agli ordini! 👮', 'Vabbeh...😓', 'Se insisti...',
- 'Solo per stavolta! 😠', 'Solo perché sei tu 😍', 'Eccoci! 🙃'];
+const affirmative = ['Sì!', 'Ok 👌', 'Va bene!'];
+const done = ['Fatto! 🕴', 'Finito! 👌'];
+const doSomething = ['Agli ordini! 👮', 'Vabbeh...😓', 'Se insisti...',
+	'Solo per stavolta! 😠', 'Solo perché sei tu 😍', 'Eccoci! 🙃'];
 const negative = ['Non posso...', 'Col cazzo! 😜', 'Fattelo da solo! 🖕'];
 const notUnderstood = ['Ma che stai a dì? 🤔', 'Non ho capito 😅']
 
-module.exports = class HomeBot extends TelegramBot{
+module.exports = class HomeBot extends TelegramBot {
 
-	affermativeAnswer(chatId){
+	affermativeAnswer(chatId) {
 		this._answer(chatId, affirmative);
 	}
 
-	negativeAnswer(chatId){
+	negativeAnswer(chatId) {
 		this._answer(chatId, negative);
 	}
 
-	doSomethingAnswer(chatId){
+	doSomethingAnswer(chatId) {
 		this._answer(chatId, doSomething);
 	}
 
-	doneAnswer(chatId){
+	doneAnswer(chatId) {
 		this._answer(chatId, done);
 	}
 
-	_answer(chatId, answerBucket){
-		var index = Math.floor((Math.random() * answerBucket.length)+1)-1;
+	_answer(chatId, answerBucket) {
+		var index = Math.floor((Math.random() * answerBucket.length) + 1) - 1;
 		this.sendMessage(chatId, answerBucket[index]);
 	}
 }
