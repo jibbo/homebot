@@ -5,7 +5,10 @@ An extensible telegram bot built for 🏡 with ❤️
 // TODO.
 
 ### Next features
+In no particular order:
 
+- Localization
+- Admin Module to add or remove users from using some modules
 - Automatic `my_module` folder scanning to load scripts
 
 ### License
