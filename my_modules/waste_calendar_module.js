@@ -22,10 +22,15 @@ module.exports = class WasteCalendar extends Module {
 		schedule.scheduleJob(rule, () => {
 			const what = this._getWhatToThrowAway();
 			for (var recipient in reminderRecipients) {
-				this.bot.sendMessage(
-					recipient,
-					'Ohu, buttate via ' + what + 'oggi, va!'
-				);
+				try {
+					this.bot.sendMessage(
+						recipient,
+						'Ohu, buttate via ' + what + 'oggi, va!'
+					);
+				} catch (err) {
+					this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
+					this.log.f("[SCHEDULE]", err);
+				}
 			}
 		});
 	}

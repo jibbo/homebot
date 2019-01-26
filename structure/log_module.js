@@ -32,7 +32,5 @@ module.exports = class Log {
                 this.e('ERROR', err);
             }
         });
-
-        this.c(tag, toLog);
     }
 }

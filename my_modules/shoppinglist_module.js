@@ -4,11 +4,14 @@ const Module = require('../structure/module');
 
 // only these users can use this module
 const whitelist = [84840252, 96703266];
-// TODO make usage of a db, look into why sequelize doesn't compile on this machine.
-var groceryList = {};
 
 module.exports = class ShoppingList extends Module {
 
+	constructor(bot){
+	    super(bot);
+	    // TODO make usage of a db, look into why sequelize doesn't compile on this machine.
+	    this.groceryList = {};
+	}
 	registerListeners() {
 
 		this.bot.on('text', (msg) => {
@@ -27,11 +30,11 @@ module.exports = class ShoppingList extends Module {
 			}
 		})
 
-		this.bot.onText(/\/nuova/, (msg, match) => {
+		this.bot.onText(/\/nuovalista/, (msg, match) => {
 			this._startGroceryList(msg);
 		});
 
-		this.bot.onText(/\/cancella/, (msg, match) => {
+		this.bot.onText(/\/cancellalista/, (msg, match) => {
 			this._newGroceryList(msg);
 		});
 	}
@@ -45,8 +48,8 @@ module.exports = class ShoppingList extends Module {
 
 	_groceriesToString() {
 		var out = '';
-		for (var itemKey in groceryList) {
-			out = out + '[' + groceryList[itemKey] + '] ' + itemKey + '\n';
+		for (var itemKey in this.groceryList) {
+			out = out + '[' + this.groceryList[itemKey] + '] ' + itemKey + '\n';
 		}
 		if (out.length == 0) {
 			return 'O hai il frigo pieno o mangi cazzi!';
@@ -57,7 +60,7 @@ module.exports = class ShoppingList extends Module {
 	_buy(msg, what) {
 		const chatId = msg.chat.id;
 		if (this._isAuthenticated(msg.from)) {
-			groceryList[what] = '   ';
+			this.groceryList[what] = '   ';
 			this.bot.affermativeAnswer(chatId);
 			this.bot.sendMessage(chatId, this._groceriesToString());
 			this.log.c("GLIST-BUY", what, msg.from);
@@ -82,9 +85,9 @@ module.exports = class ShoppingList extends Module {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
 		if (this._isAuthenticated(msg.from)) {
-			for (var itemKey in groceryList) {
+			for (var itemKey in  this.groceryList) {
 				if (itemKey == what) {
-					groceryList[itemKey] = ' X ';
+					this.groceryList[itemKey] = ' X ';
 					this.bot.sendMessage(chatId, 'Bye, Bye 💸');
 					this.bot.sendMessage(chatId, this._groceriesToString());
 					this.log.c('GLIST-TAKE', 'request', msg.from);
@@ -103,14 +106,14 @@ module.exports = class ShoppingList extends Module {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
 		if (this._isAuthenticated(msg.from)) {
-			for (var itemKey in groceryList) {
-				if (groceryList[itemKey] === ' X ') {
-					delete groceryList[itemKey];
+			for (var itemKey in this.groceryList) {
+				if (this.groceryList[itemKey] === ' X ') {
+					delete this.groceryList[itemKey];
 				}
 			}
 			this.bot.doneAnswer(chatId);
 			this.bot.sendMessage(chatId, this._groceriesToString());
-			groceryList = {};
+			//this.groceryList = {};
 			this.log.c('GLIST-NEW', 'request', msg.from);
 		} else {
 			this.log.f('UNAUTHORIZED', '/newGroceryList', msg.from);
@@ -123,7 +126,7 @@ module.exports = class ShoppingList extends Module {
 		if (this._isAuthenticated(msg.from)) {
 			this.bot.doneAnswer(chatId);
 			this.bot.sendMessage(chatId, 'Tolgo tutto!');
-			groceryList = {};
+			this.groceryList = {};
 			this.log.c('GLIST-START', 'request', msg.from);
 		} else {
 			this.log.f('UNAUTHORIZED', '/startGroceryList', msg.from);
