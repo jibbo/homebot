@@ -3,36 +3,20 @@
 const schedule = require('node-schedule');
 const Module = require('../structure/module');
 
-const invernalCalendar = ['Un cazzo ❌', 'Carta 🗞', 'Umido ☣', 'Secco ♻',
-	'Plastica e Lattine', 'Umido 🐛', 'Sta minchia! 🍌'];
-const summerCalendar = ['Umido 🐷', 'Carta 🗞', 'Umido ☣', 'Secco ♻', 'Umido ☣',
-	'Plastica e Lattine', 'Un cazzo ❌'];
-
-const reminderRecipients = ["84840252", "96703266"];
+// Sunday, Monday, Tuesday, etc...
+const invernalCalendar = ['Sta minchia! 🍌', 'Un cazzo ❌', 'Carta 🗞', 'Umido ☣', 'Secco ♻',
+	'Plastica e Lattine', 'Umido 🐛'];
+const summerCalendar = ['Un cazzo ❌', 'Umido 🐷', 'Carta 🗞', 'Umido ☣', 'Secco ♻', 'Umido ☣',
+	'Plastica e Lattine'];
 
 module.exports = class WasteCalendar extends Module {
 
 	constructor(homeBot) {
 		super(homeBot);
-		const rule = new schedule.RecurrenceRule();
-		rule.dayOfWeek = new schedule.Range(2, 5);
-		rule.hour = 20;
-		rule.minute = 0;
-
-		schedule.scheduleJob(rule, () => {
-			const what = this._getWhatToThrowAway();
-			for (var recipient in reminderRecipients) {
-				try {
-					this.bot.sendMessage(
-						recipient,
-						'Ohu, buttate via ' + what + 'oggi, va!'
-					);
-				} catch (err) {
-					this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
-					this.log.f("[SCHEDULE]", err);
-				}
-			}
-		});
+		this.rule = new schedule.RecurrenceRule();
+		this.rule.dayOfWeek = new schedule.Range(2, 5);
+		this.rule.hour = 20;
+		this.rule.minute = 0;
 	}
 
 	registerListeners() {
@@ -40,9 +24,24 @@ module.exports = class WasteCalendar extends Module {
 			this._computeAnswer(msg.from.id);
 		});
 		this.bot.on(/\/ricordami/, (msg, match) => {
-
+			var chatId = msg.chat.id;
+			this.log.c("WASTE-REMEMBER", chatId);
+			this.bot.doSomething(chatId);
+			schedule.scheduleJob(this.rule, () => {
+				const what = this._getWhatToThrowAway();
+				try {
+					this.bot.sendMessage(
+						chatId,
+						'Ohu, buttate via ' + what + 'oggi, va!'
+					);
+				} catch (err) {
+					this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
+					this.log.f("[SCHEDULE]", err);
+				}
+			});
 		});
 		this.bot.on('text', (msg) => {
+			msg.text = msg.text.toLowerCase();
 			if (msg.text.includes('buttare')) {
 				this._computeAnswer(msg.from.id);
 			}
@@ -66,7 +65,10 @@ module.exports = class WasteCalendar extends Module {
 			cal = invernalCalendar;
 		}
 
-		const index = date.getDay() - 1;
+		this.log.c("WASTE-REQUEST", date);
+
+		var index = date.getDay();
+
 		return cal[index];
 	}
 }
