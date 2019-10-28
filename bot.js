@@ -31,8 +31,8 @@ bot.on('polling_error', (error) => {
 });
 
 // Healthchecks.io (monitors if the bot is up and online)
+const https = require('https');
 setInterval(() => {
-    Log.c("Healthchecks.io", "interval");
     https.get("https://hc-ping.com/263a623a-cf73-4eab-949e-0bb42654296c");
 }, 30 * 60 * 1000); // every 30 minutes
 https.get("https://hc-ping.com/263a623a-cf73-4eab-949e-0bb42654296c");
