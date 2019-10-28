@@ -14,31 +14,28 @@ module.exports = class WasteCalendar extends Module {
 	constructor(homeBot) {
 		super(homeBot);
 		this.rule = new schedule.RecurrenceRule();
-		this.rule.dayOfWeek = new schedule.Range(2, 5);
+		this.rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 		this.rule.hour = 20;
 		this.rule.minute = 0;
+
+		schedule.scheduleJob(this.rule, () => {
+			const what = this._getWhatToThrowAway();
+			try {
+				this.bot.sendMessage(
+					'84840252',
+					'Ohu, buttate via ' + what + 'oggi, va!'
+				);
+			} catch (err) {
+				this.bot.sendMessage('84840252', err);
+				this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
+				this.log.f("[SCHEDULE]", err);
+			}
+		});
 	}
 
 	registerListeners() {
 		this.bot.onText(/\/spazzatura/, (msg, match) => {
 			this._computeAnswer(msg.from.id);
-		});
-		this.bot.on(/\/ricordami/, (msg, match) => {
-			var chatId = msg.chat.id;
-			this.log.c("WASTE-REMEMBER", chatId);
-			this.bot.doSomething(chatId);
-			schedule.scheduleJob(this.rule, () => {
-				const what = this._getWhatToThrowAway();
-				try {
-					this.bot.sendMessage(
-						chatId,
-						'Ohu, buttate via ' + what + 'oggi, va!'
-					);
-				} catch (err) {
-					this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
-					this.log.f("[SCHEDULE]", err);
-				}
-			});
 		});
 		this.bot.on('text', (msg) => {
 			msg.text = msg.text.toLowerCase();
