@@ -7,10 +7,10 @@ const whitelist = [84840252, 96703266];
 
 module.exports = class ShoppingList extends Module {
 
-	constructor(bot){
-	    super(bot);
-	    // TODO make usage of a db, look into why sequelize doesn't compile on this machine.
-	    this.groceryList = {};
+	constructor(bot) {
+		super(bot);
+		// TODO make usage of a db, look into why sequelize doesn't compile on this machine.
+		this.groceryList = {};
 	}
 	registerListeners() {
 
@@ -85,7 +85,7 @@ module.exports = class ShoppingList extends Module {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
 		if (this._isAuthenticated(msg.from)) {
-			for (var itemKey in  this.groceryList) {
+			for (var itemKey in this.groceryList) {
 				if (itemKey == what) {
 					this.groceryList[itemKey] = ' X ';
 					this.bot.sendMessage(chatId, 'Bye, Bye 💸');
