@@ -24,7 +24,7 @@ const Test = require('./my_modules/test_module');
 new Test(bot);
 
 // Error handling
-var Log = require('./structure/log_module');
+var Log = require('./structure/logger');
 Log = new Log();
 bot.on('polling_error', (error) => {
     Log.e("ERROR", error);

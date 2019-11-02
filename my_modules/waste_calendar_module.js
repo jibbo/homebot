@@ -19,6 +19,8 @@ module.exports = class WasteCalendar extends Module {
 		this.rule.hour = 20;
 		this.rule.minute = 0;
 
+		this.bot.sendMessage(authChats[0], 'ciao');
+
 		schedule.scheduleJob(this.rule, () => {
 			const what = this._getWhatToThrowAway();
 			authChats.forEach(chatId => {

@@ -1,6 +1,6 @@
 "use strict";
 
-const Log = require('./logger.js');
+const Log = require('./logger');
 
 module.exports = class Module {
 

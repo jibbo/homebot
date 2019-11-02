@@ -1,7 +1,7 @@
 "use strict";
 
 const Module = require('../structure/module');
-const Auth = require('../struscture/auth');
+const Auth = require('../structure/auth');
 
 module.exports = class ShoppingList extends Module {
 
