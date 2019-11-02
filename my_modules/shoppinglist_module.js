@@ -1,9 +1,7 @@
 "use strict";
 
 const Module = require('../structure/module');
-
-// only these users can use this module
-const whitelist = [84840252, 96703266];
+const Auth = require('../struscture/auth');
 
 module.exports = class ShoppingList extends Module {
 
@@ -11,20 +9,20 @@ module.exports = class ShoppingList extends Module {
 		super(bot);
 		// TODO make usage of a db, look into why sequelize doesn't compile on this machine.
 		this.groceryList = {};
+		this.auth = new Auth();
 	}
 	registerListeners() {
 
 		this.bot.on('text', (msg) => {
-			if (msg.text.includes('comprare') || msg.text.includes('spesa')) {
+			const text = msg.text.toLowerCase();
+			if (text.includes('comprare') || text.includes('spesa')) {
 				this._showGroceryList(msg);
 			}
-			else if (msg.text.includes('compra')) {
-				const text = msg.text;
+			else if (text.includes('compra')) {
 				const match = text.substring(text.indexOf('compra') + 7);
 				this._buy(msg, match)
 			}
-			else if (msg.text.includes('pres')) {
-				const text = msg.text;
+			else if (text.includes('pres')) {
 				const match = text.substring(text.indexOf('pres') + 6);
 				this._taken(msg, match)
 			}
@@ -37,13 +35,6 @@ module.exports = class ShoppingList extends Module {
 		this.bot.onText(/\/cancellalista/, (msg, match) => {
 			this._newGroceryList(msg);
 		});
-	}
-
-	_isAuthenticated(user) {
-		if (whitelist.indexOf(user.id) >= 0) {
-			return true;
-		}
-		return false;
 	}
 
 	_groceriesToString() {
@@ -59,36 +50,29 @@ module.exports = class ShoppingList extends Module {
 
 	_buy(msg, what) {
 		const chatId = msg.chat.id;
-		if (this._isAuthenticated(msg.from)) {
+		if (this.auth.isEnabled(chatId)) {
 			this.groceryList[what] = '   ';
-			this.bot.affermativeAnswer(chatId);
 			this.bot.sendMessage(chatId, this._groceriesToString());
 			this.log.c("GLIST-BUY", what, msg.from);
-		} else {
-			this.log.f('UNAUTHORIZED', '/buy', msg.from);
 		}
 	}
 
 	_showGroceryList(msg) {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
-		if (this._isAuthenticated(msg.from)) {
-			this.bot.doSomethingAnswer(chatId);
+		if (this.auth.isEnabled(chatId)) {
 			this.bot.sendMessage(chatId, this._groceriesToString());
 			this.log.c("GLIST", "request", msg.from);
-		} else {
-			this.log.f('UNAUTHORIZED', '/showGroceryList', msg.from);
 		}
 	}
 
 	_taken(msg, what) {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
-		if (this._isAuthenticated(msg.from)) {
+		if (this.auth.isEnabled(chatId)) {
 			for (var itemKey in this.groceryList) {
 				if (itemKey == what) {
 					this.groceryList[itemKey] = ' X ';
-					this.bot.sendMessage(chatId, 'Bye, Bye 💸');
 					this.bot.sendMessage(chatId, this._groceriesToString());
 					this.log.c('GLIST-TAKE', 'request', msg.from);
 					return;
@@ -99,37 +83,30 @@ module.exports = class ShoppingList extends Module {
 			this.bot.sendMessage(chatId, 'Ma che stai a dì? 🤔');
 			return;
 		}
-		this.log.f('UNAUTHORIZED', '/take', msg.from);
 	}
 
 	_startGroceryList(msg) {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
-		if (this._isAuthenticated(msg.from)) {
+		if (this.auth.isEnabled(chatId)) {
 			for (var itemKey in this.groceryList) {
 				if (this.groceryList[itemKey] === ' X ') {
 					delete this.groceryList[itemKey];
 				}
 			}
-			this.bot.doneAnswer(chatId);
 			this.bot.sendMessage(chatId, this._groceriesToString());
 			//this.groceryList = {};
 			this.log.c('GLIST-NEW', 'request', msg.from);
-		} else {
-			this.log.f('UNAUTHORIZED', '/newGroceryList', msg.from);
 		}
 	}
 
 	_newGroceryList(msg) {
 		const chatId = msg.chat.id;
 		const userId = msg.from.id;
-		if (this._isAuthenticated(msg.from)) {
-			this.bot.doneAnswer(chatId);
+		if (this.auth.isEnabled(chatId)) {
 			this.bot.sendMessage(chatId, 'Tolgo tutto!');
 			this.groceryList = {};
 			this.log.c('GLIST-START', 'request', msg.from);
-		} else {
-			this.log.f('UNAUTHORIZED', '/startGroceryList', msg.from);
 		}
 	}
 }

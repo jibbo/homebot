@@ -2,6 +2,7 @@
 
 const schedule = require('node-schedule');
 const Module = require('../structure/module');
+const authChats = require('../auth_chats.json');
 
 // Sunday, Monday, Tuesday, etc...
 const invernalCalendar = ['Sta minchia! 🍌', 'Un cazzo ❌', 'Carta 🗞', 'Umido ☣', 'Secco ♻',
@@ -20,16 +21,9 @@ module.exports = class WasteCalendar extends Module {
 
 		schedule.scheduleJob(this.rule, () => {
 			const what = this._getWhatToThrowAway();
-			try {
-				this.bot.sendMessage(
-					'84840252',
-					'Ohu, buttate via ' + what + 'oggi, va!'
-				);
-			} catch (err) {
-				this.bot.sendMessage('84840252', err);
-				this.log.e("[SCHEDULE]", "Can't reach: " + recipient);
-				this.log.f("[SCHEDULE]", err);
-			}
+			authChats.forEach(chatId => {
+				this.bot.sendMessage(chatId,'Ohu, buttate via ' + what + 'oggi, va!');
+			});
 		});
 	}
 
