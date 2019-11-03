@@ -2,8 +2,20 @@
 
 const fs = require('fs');
 const https = require('https');
+const tokens = require('../secrets.json');
 
 module.exports = class Log {
+
+    constructor() {
+        let env;
+        if (process.argv[2]) {
+            env = process.argv[2];
+        } else {
+            env = "prod";
+        }
+        this._token = tokens[env];
+    }
+
     e(tag, what) {
         const date = new Date();
         const toLog = date.toLocaleString() + '->' + '[' + tag + '] ' + what;
@@ -14,7 +26,12 @@ module.exports = class Log {
         //tries to send the error back to the admin chat.
         // TODO fix hardcoded chatId
         const toSend = encodeURIComponent(toLog);
-        https.get("https://api.telegram.org/bot788887646:AAETM8STPxQz6Bol6egLqqf-tNpUbQNBZ4I/sendMessage?chat_id=84840252&text=" + toSend);
+        https.get(
+            "https://api.telegram.org/bot" +
+            this._token +
+            "/sendMessage?chat_id=84840252&text=" +
+            toSend
+        );
     }
 
     c(tag, what) {

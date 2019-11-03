@@ -10,7 +10,6 @@ module.exports = class Test extends Module {
 		this.bot.onText(/\/test/, (msg, match) => {
 			const chatId = msg.chat.id;
 			this.bot.sendMessage(chatId, chatId);
-			this.bot.negativeAnswer(chatId);
 		});
 	}
 }
