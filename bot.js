@@ -39,6 +39,7 @@ var Log = require('./structure/logger');
 Log = new Log();
 bot.on('polling_error', (error) => {
     Log.e("ERROR", error);
+    console.log("[MAIN] " + error);
 });
 
 if (env == 'prod') {
@@ -49,8 +50,8 @@ if (env == 'prod') {
     }, 30 * 60 * 1000); // every 30 minutes
     https.get("https://hc-ping.com/263a623a-cf73-4eab-949e-0bb42654296c");
 } else {
-    console.log("Main", "Skipped Healthcheks.io on staging")
+    console.log("[Main]", "Skipped Healthcheks.io on staging")
 }
 
 //Main
-console.log('Bot Casa Defra-Tac ready! @' + env);
+console.log('[Main] Bot Casa Defra-Tac ready! @' + env);
