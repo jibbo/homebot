@@ -4,7 +4,7 @@ const Log = require('./logger');
 
 module.exports = class Module {
 
-	constructor(homeBot) {
+	constructor(homeBot, db) {
 
 		if (this.new === Module) {
 			throw new TypeError("Cannot construct a Module instances directly, use its subclasses");
@@ -12,6 +12,7 @@ module.exports = class Module {
 
 		this.bot = homeBot;
 		this.log = new Log();
+		this.db = db;
 
 		this.registerListeners();
 	}

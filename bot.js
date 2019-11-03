@@ -2,6 +2,8 @@
 const HomeBot = require('./structure/homebot');
 const token = '788887646:AAETM8STPxQz6Bol6egLqqf-tNpUbQNBZ4I'
 const bot = new HomeBot(token, { polling: true });
+const Db = require('./structure/db');
+const db = new Db().conn;
 
 // Start command
 const Start = require('./my_modules/start_module');
@@ -13,7 +15,7 @@ new Guestbook(bot);
 
 // Grocery shopping events
 const ShoppingList = require('./my_modules/shoppinglist_module');
-new ShoppingList(bot);
+new ShoppingList(bot, db);
 
 // Waste calendar
 const WasteCalendar = require('./my_modules/waste_calendar_module');

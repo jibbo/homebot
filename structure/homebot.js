@@ -27,6 +27,10 @@ module.exports = class HomeBot extends TelegramBot {
 		this._answer(chatId, done);
 	}
 
+	notUnderstoodAnswer(chatId) {
+		this._answer(chatId, notUnderstood);
+	}
+
 	_answer(chatId, answerBucket) {
 		var index = Math.floor((Math.random() * answerBucket.length) + 1) - 1;
 		this.sendMessage(chatId, answerBucket[index]);
