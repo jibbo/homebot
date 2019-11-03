@@ -52,17 +52,24 @@ module.exports = class ShoppingList extends Module {
             }
 
             if (!rows) {
+                this.bot.sendAnimation(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
                 return;
             }
 
             var out = '';
             rows.forEach(row => {
-                out = out + '[' + row.taken + '] ' + row.item + '\n';
+                let state = '  ';
+                if (row.taken != 0) {
+                    state = ' X ';
+                }
+                out = out + '[' + state + '] ' + row.item + '\n';
             });
 
             if (out.length == 0) {
-                return 'O hai il frigo pieno o mangi cazzi!';
+                this.bot.sendAnimation(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
+                return;
             }
+
             this.bot.sendMessage(chatId, out);
         });
     }
