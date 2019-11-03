@@ -3,6 +3,7 @@
 const fs = require('fs');
 const https = require('https');
 const tokens = require('../secrets.json');
+const authChats = require('../auth_chats.json');
 
 module.exports = class Log {
 
@@ -29,7 +30,9 @@ module.exports = class Log {
         https.get(
             "https://api.telegram.org/bot" +
             this._token +
-            "/sendMessage?chat_id=84840252&text=" +
+            "/sendMessage?chat_id=" +
+            authChats[0] +
+            "&text=" +
             toSend
         );
     }
