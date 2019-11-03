@@ -25,6 +25,8 @@ module.exports = class ShoppingList extends Module {
 			else if (text.includes('pres')) {
 				const match = text.substring(text.indexOf('pres') + 6);
 				this._taken(msg, match)
+			} else {
+				this.bot.notUnderstoodAnswer(msg.chat.id);
 			}
 		})
 
@@ -80,7 +82,7 @@ module.exports = class ShoppingList extends Module {
 			}
 			// item not found
 			this.log.c('UNRECOGNIZED', 'GLIST-TAKE', what);
-			this.bot.sendMessage(chatId, 'Ma che stai a dì? 🤔');
+			this.bot.notUnderstoodAnswer(chatId);
 			return;
 		}
 	}
