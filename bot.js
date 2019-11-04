@@ -23,7 +23,7 @@ const Guestbook = require('./my_modules/guestbook_module');
 new Guestbook(bot);
 
 // Grocery shopping events
-const ShoppingList = require('./my_modules/new_shopping_list_module');
+const ShoppingList = require('./my_modules/shopping_list_module');
 new ShoppingList(bot, db);
 
 // Waste calendar
@@ -49,8 +49,8 @@ if (env == 'prod') {
     }, 30 * 60 * 1000); // every 30 minutes
     https.get("https://hc-ping.com/263a623a-cf73-4eab-949e-0bb42654296c");
 } else {
-    console.log("Main", "Skipped Healthcheks.io on staging")
+    Log.c("Main", "Skipped Healthcheks.io on staging")
 }
 
 //Main
-console.log('Bot Casa Defra-Tac ready! @' + env);
+Log.c('Main', 'Bot Casa Defra-Tac ready! @' + env);
