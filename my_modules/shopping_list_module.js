@@ -96,8 +96,8 @@ module.exports = class ShoppingList extends Module {
     _taken(msg, what) {
         const chatId = msg.chat.id;
         if (this.auth.isEnabled(chatId)) {
-            let stmt = this.db.prepare("UPDATE GroceryList SET taken = 1 WHERE item LIKE ? LIMIT 1");
-            stmt.run('%' + what + '%');
+            let stmt = this.db.prepare("UPDATE GroceryList SET taken = 1 WHERE item LIKE ?");
+            stmt.run(what + '%');
             this._showGroceryList(msg);
         }
     }

@@ -23,7 +23,7 @@ const Guestbook = require('./my_modules/guestbook_module');
 new Guestbook(bot);
 
 // Grocery shopping events
-const ShoppingList = require('./my_modules/new_shopping_list_module');
+const ShoppingList = require('./my_modules/shopping_list_module');
 new ShoppingList(bot, db);
 
 // Waste calendar
