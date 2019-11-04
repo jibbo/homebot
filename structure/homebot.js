@@ -7,7 +7,7 @@ const done = ['Fatto! 🕴', 'Finito! 👌'];
 const doSomething = ['Agli ordini! 👮', 'Vabbeh...😓', 'Se insisti...',
 	'Solo per stavolta! 😠', 'Solo perché sei tu 😍', 'Eccoci! 🙃'];
 const negative = ['Non posso...', 'Col cazzo! 😜', 'Fattelo da solo! 🖕'];
-const notUnderstood = ['Ma che stai a dì? 🤔', 'Non ho capito 😅']
+const notUnderstood = ['Ma che stai a dì? 🤔', 'Non ho capito 😅'];
 
 module.exports = class HomeBot extends TelegramBot {
 

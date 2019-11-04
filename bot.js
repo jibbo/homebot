@@ -49,8 +49,8 @@ if (env == 'prod') {
     }, 30 * 60 * 1000); // every 30 minutes
     https.get("https://hc-ping.com/263a623a-cf73-4eab-949e-0bb42654296c");
 } else {
-    Log.c("[Main]", "Skipped Healthcheks.io on staging")
+    Log.c("Main", "Skipped Healthcheks.io on staging")
 }
 
 //Main
-Log.c('[Main]', 'Bot Casa Defra-Tac ready! @' + env);
+Log.c('Main', 'Bot Casa Defra-Tac ready! @' + env);

@@ -23,11 +23,11 @@ module.exports = class ShoppingList extends Module {
             }
             else if (text.includes('compra')) {
                 const match = text.substring(text.indexOf('compra') + 7);
-                this._buy(msg, match)
+                this._buy(msg, match);
             }
             else if (text.includes('pres')) {
                 const match = text.substring(text.indexOf('pres') + 6);
-                this._taken(msg, match)
+                this._taken(msg, match);
             } else {
                 this.bot.notUnderstoodAnswer(msg.chat.id);
             }
@@ -52,7 +52,7 @@ module.exports = class ShoppingList extends Module {
             }
 
             if (!rows) {
-                this.bot.sendAnimation(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
+                this.bot.sendVideo(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
                 return;
             }
 
@@ -66,7 +66,7 @@ module.exports = class ShoppingList extends Module {
             });
 
             if (out.length == 0) {
-                this.bot.sendAnimation(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
+                this.bot.sendVideo(chatId, "https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif");
                 return;
             }
 
@@ -96,20 +96,25 @@ module.exports = class ShoppingList extends Module {
     _taken(msg, what) {
         const chatId = msg.chat.id;
         if (this.auth.isEnabled(chatId)) {
+            let stmt = this.db.prepare("UPDATE GroceryList SET taken = 1 WHERE item LIKE ? LIMIT 1");
+            stmt.run('%' + what + '%');
+            this._showGroceryList(msg);
         }
     }
 
     _startGroceryList(msg) {
         const chatId = msg.chat.id;
         if (this.auth.isEnabled(chatId)) {
-
+            this.db.run("DELETE FROM GroceryList WHERE taken = 1");
+            this._showGroceryList(msg);
         }
     }
 
     _newGroceryList(msg) {
         const chatId = msg.chat.id;
         if (this.auth.isEnabled(chatId)) {
-
+            this.db.run("DELETE FROM GroceryList");
+            this.bot.doneAnswer(chatId);
         }
     }
 
