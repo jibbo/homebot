@@ -7,9 +7,9 @@ const Log = require('./logger');
 
 module.exports = class Db {
 
-    constructor() {
+    constructor(name) {
         this.log = new Log();
-        const dbPath = path.resolve(__dirname, '../database/db.sqlite');
+        const dbPath = path.resolve(__dirname, '../database/'+name+".sqlite");
         this.conn = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 return console.error(err.message);

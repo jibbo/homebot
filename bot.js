@@ -1,7 +1,7 @@
 const HomeBot = require('./structure/homebot');
 const configs = require('./config.json');
 
-const env;
+let env;
 if (process.argv[2]) {
     env = process.argv[2];
 } else {
