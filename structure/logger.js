@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const https = require('https');
-const configs = require('../configs.json');
+const configs = require('../config.json');
 const tokens = configs["tokens"];
 const authChats = configs["auth_chats"];
 
