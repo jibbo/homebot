@@ -2,8 +2,9 @@
 
 const fs = require('fs');
 const https = require('https');
-const tokens = require('../secrets.json');
-const authChats = require('../auth_chats.json');
+const configs = require('../configs.json');
+const tokens = configs["tokens"];
+const authChats = configs["auth_chats"];
 
 module.exports = class Log {
 
