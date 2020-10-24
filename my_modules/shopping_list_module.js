@@ -28,10 +28,8 @@ module.exports = class ShoppingList extends Module {
             else if (text.includes('pres')) {
                 const match = text.substring(text.indexOf('pres') + 6);
                 this._taken(msg, match);
-            } else {
-                this.bot.notUnderstoodAnswer(msg.chat.id);
-            }
-        })
+            } 
+        });
 
         this.bot.onText(/\/nuovalista/, (msg, match) => {
             this._startGroceryList(msg);

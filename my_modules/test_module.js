@@ -2,8 +2,6 @@
 
 const Module = require('../structure/module');
 
-const schedule = require('node-schedule');
-
 module.exports = class Test extends Module {
 
 	registerListeners() {

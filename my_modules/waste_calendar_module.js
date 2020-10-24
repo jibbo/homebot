@@ -19,8 +19,6 @@ module.exports = class WasteCalendar extends Module {
 		this.rule.hour = 20;
 		this.rule.minute = 0;
 
-		this.bot.sendMessage(authChats[0], 'ciao');
-
 		schedule.scheduleJob(this.rule, () => {
 			const what = this._getWhatToThrowAway();
 			authChats.forEach(chatId => {
@@ -30,9 +28,6 @@ module.exports = class WasteCalendar extends Module {
 	}
 
 	registerListeners() {
-		this.bot.onText(/\/spazzatura/, (msg, match) => {
-			this._computeAnswer(msg.from.id);
-		});
 		this.bot.on('text', (msg) => {
 			msg.text = msg.text.toLowerCase();
 			if (msg.text.includes('buttare')) {
