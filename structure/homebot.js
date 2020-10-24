@@ -1,7 +1,7 @@
 "use strict";
 
 const TelegramBot = require('node-telegram-bot-api');
-const authChats = require('./config.json')["auth_chats"];
+const authChats = require('../config.json')["auth_chats"];
 
 const affirmative = ['Sì!', 'Ok 👌', 'Va bene!'];
 const done = ['Fatto! 🕴', 'Finito! 👌'];
