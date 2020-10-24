@@ -1,0 +1,11 @@
+{
+    "tokens": {
+	"prod": "",
+	"staging": ""
+    },
+    "db_name":{
+	"prod": "prod.db",
+	"staging" : "staging.db"
+    },
+    "auth_chats" : []
+}

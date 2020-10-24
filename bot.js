@@ -1,16 +1,19 @@
 const HomeBot = require('./structure/homebot');
-const Db = require('./structure/db');
-const db = new Db().conn;
+const configs = require('./config.json');
 
-const tokens = require('./secrets.json');
-let env;
+const env;
 if (process.argv[2]) {
     env = process.argv[2];
 } else {
     env = "prod";
 }
-const token = tokens[env];
 
+// configures DB
+const Db = require('./structure/db');
+const db = new Db(configs["db_name"][env]).conn;
+
+// Starts the bot 
+const token = configs["tokens"][env];
 const bot = new HomeBot(token, { polling: true });
 
 

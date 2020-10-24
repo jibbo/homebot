@@ -86,4 +86,5 @@ typings/
 guestbook.txt
 auth_chats.json
 secrets.json
+config.json
 database/
