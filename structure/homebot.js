@@ -1,6 +1,7 @@
 "use strict";
 
 const TelegramBot = require('node-telegram-bot-api');
+const authChats = require('./config.json')["auth_chats"];
 
 const affirmative = ['Sì!', 'Ok 👌', 'Va bene!'];
 const done = ['Fatto! 🕴', 'Finito! 👌'];
@@ -29,6 +30,12 @@ module.exports = class HomeBot extends TelegramBot {
 
 	notUnderstoodAnswer(chatId) {
 		this._answer(chatId, notUnderstood);
+	}
+
+	broadcast(what){
+	    for(chatId in authChats){
+		this._answer(chatId, what);
+	    }
 	}
 
 	_answer(chatId, answerBucket) {

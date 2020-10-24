@@ -1,6 +1,6 @@
 "use strict";
 
-const authChats = require('../auth_chats.json');
+const authChats = require('../config.json')["auth_chats"];
 
 module.exports = class Auth {
 
