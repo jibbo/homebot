@@ -78,6 +78,7 @@ module.exports = class ShoppingList extends Module {
             this.log.c("GLIST", "adding " + what);
             let stmt = this.db.prepare("INSERT OR IGNORE INTO GroceryList VALUES (?,?)");
             stmt.run(what, 0);
+	    this.bot.broadcast("Aggiunto "+ what + "alla lista della spesa!");
             this._sendGroceries(chatId);
         } else {
             this.log.c("GLIST", "unauth /buy by" + msg);

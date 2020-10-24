@@ -2,7 +2,6 @@
 
 const schedule = require('node-schedule');
 const Module = require('../structure/module');
-const authChats = require('../auth_chats.json');
 
 // Sunday, Monday, Tuesday, etc...
 const invernalCalendar = ['Sta minchia! 🍌', 'Un cazzo ❌', 'Carta 🗞', 'Umido ☣', 'Secco ♻',
@@ -21,9 +20,7 @@ module.exports = class WasteCalendar extends Module {
 
 		schedule.scheduleJob(this.rule, () => {
 			const what = this._getWhatToThrowAway();
-			authChats.forEach(chatId => {
-				this.bot.sendMessage(chatId,'Ohu, buttate via ' + what + 'oggi, va!');
-			});
+			this.bot.broadcast('Ohu, buttate via ' + what + 'oggi, va!');
 		});
 	}
 

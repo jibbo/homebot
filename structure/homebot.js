@@ -33,9 +33,9 @@ module.exports = class HomeBot extends TelegramBot {
 	}
 
 	broadcast(what){
-	    for(chatId in authChats){
-		this._answer(chatId, what);
-	    }
+	    authChats.forEach(chatId =>{
+	      this.sendMessage(chatId, what);
+	    });
 	}
 
 	_answer(chatId, answerBucket) {
