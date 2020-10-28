@@ -51,7 +51,7 @@ result should looks approximatively like this:
 ### Adding modules
 
 Simply drop a module file (it should be a valid `.js`) file inside the `my_modules` folder. Now
-initialize the module inside the file `bot.js`. Just under the comment `// add your modules here`.
+initialize the module inside the file `bot.js`. Just under the comment `// initialize all your modules here`.
 
 ### Removing modules
 

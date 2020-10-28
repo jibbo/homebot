@@ -21,10 +21,6 @@ const bot = new HomeBot(token, { polling: true });
 const Start = require('./my_modules/start_module');
 new Start(bot);
 
-// Guestbook commands
-//const Guestbook = require('./my_modules/guestbook_module');
-//new Guestbook(bot);
-
 // Grocery shopping events
 const ShoppingList = require('./my_modules/shopping_list_module');
 new ShoppingList(bot, db);
