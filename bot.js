@@ -56,4 +56,4 @@ if (env == 'prod') {
 }
 
 //Main
-Log.c('Main', 'Bot Casa Defra-Tac ready! @' + env);
+Log.c('Main', `Bot ${configs["bot_name"]} ready! @${env}`);
