@@ -1,12 +1,10 @@
 {
     "bot_name": "My HomeBot"
     "tokens": {
-	"prod": "",
-	"staging": ""
+	"prod": "<YOUR_API_TOKEN>"
     },
     "db_name":{
-	"prod": "prod.db",
-	"staging" : "staging.db"
+	"prod": "prod.db"
     },
-    "auth_chats" : []
+    "auth_chats" : [<YOUR_CHAT_ID>]
 }

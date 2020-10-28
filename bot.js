@@ -37,6 +37,17 @@ new WasteCalendar(bot);
 const Test = require('./my_modules/test_module');
 new Test(bot);
 
+// initialize here all your modules
+
+/* For example, if you want to initalize the Guestbook command, simply uncomment the following two lines:
+
+const Guestbook = require('./my_modules/guestbook_module');
+new Guestbook(bot);
+
+*/
+
+// end modules
+
 // Error handling
 var Log = require('./structure/logger');
 Log = new Log();
